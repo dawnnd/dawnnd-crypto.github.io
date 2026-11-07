@@ -1,0 +1,573 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux操作系统 | 不爱学习的小党</title><meta name="author" content="不爱学习的小党"><meta name="copyright" content="不爱学习的小党"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="目录结构及基本命令linux知识框架 linux应用：开发环境： gce&#x2F;g++ gdb 库 进程赋值，替换，信号 线程，多线程 并发 同步 网络编程：tcp&#x2F;udp sclcct copll linux安装mysql  git shell编程 redis linux c&#x2F;c++项目 Linux系统 服务器   招聘 面试 7,8个问题 多了11,12 目录结构&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux操作系统">
+<meta property="og:url" content="https://dawnd-crypto.github.io/2026/11/06/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="不爱学习的小党">
+<meta property="og:description" content="目录结构及基本命令linux知识框架 linux应用：开发环境： gce&#x2F;g++ gdb 库 进程赋值，替换，信号 线程，多线程 并发 同步 网络编程：tcp&#x2F;udp sclcct copll linux安装mysql  git shell编程 redis linux c&#x2F;c++项目 Linux系统 服务器   招聘 面试 7,8个问题 多了11,12 目录结构&amp;#x">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dawnd-crypto.github.io/img/avatar.jpg">
+<meta property="article:published_time" content="2026-11-06T10:13:33.000Z">
+<meta property="article:modified_time" content="2026-11-06T10:26:56.255Z">
+<meta property="article:author" content="不爱学习的小党">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dawnd-crypto.github.io/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Linux操作系统",
+  "url": "https://dawnd-crypto.github.io/2026/11/06/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/",
+  "image": "https://dawnd-crypto.github.io/img/avatar.jpg",
+  "datePublished": "2026-11-06T10:13:33.000Z",
+  "dateModified": "2026-11-06T10:26:56.255Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "不爱学习的小党",
+      "url": "https://dawnd-crypto.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://dawnd-crypto.github.io/2026/11/06/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.7.1.260810"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        try {
+          const data = { value }
+
+          if (ttl != null) {
+            data.expiry = Date.now() + ttl * 86400000
+          }
+
+          localStorage.setItem(key, JSON.stringify(data))
+        } catch (e) {
+          console.error(e)
+        }
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Linux操作系统',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/img/bg.jpg);"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Linux操作系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-06T10:13:33.000Z" title="发表于 2026-11-06 18:13:33">2026-11-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-06T10:26:56.255Z" title="更新于 2026-11-06 18:26:56">2026-11-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="目录结构及基本命令"><a href="#目录结构及基本命令" class="headerlink" title="目录结构及基本命令"></a>目录结构及基本命令</h2><p>linux知识框架</p>
+<h6 id="linux应用："><a href="#linux应用：" class="headerlink" title="linux应用："></a>linux应用：</h6><p>开发环境： gce&#x2F;g++ gdb 库</p>
+<p>进程赋值，替换，信号</p>
+<p>线程，多线程 并发 同步</p>
+<p>网络编程：tcp&#x2F;udp sclcct copll</p>
+<p>linux安装mysql </p>
+<p>git</p>
+<p>shell编程</p>
+<p>redis</p>
+<p>linux c&#x2F;c++项目</p>
+<p>Linux系统 服务器   招聘 面试 7,8个问题 多了11,12</p>
+<h5 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h5><p>&#x2F;根目录（ 最顶层）好比如C盘D盘</p>
+<p>在根目录下的示例文件夹   eg：boot ctc  bin lib var home usr proc root…</p>
+<p>配置信息在etc目录中，命令信息在bin文件中存放，lib存放的是库文件</p>
+<p>root文件夹是管理员的家目录</p>
+<p>都在home文件下的两个用户的家目录(因为linux系统是多用户访问，同时登录)   &#x2F;home&#x2F;stu  stu这个用户的家目录  &#x2F;home&#x2F;xiaowang 该用户的家目录     须知：所有的文件都放在家目录，不同用户的家目录不一样。$显示的是在用户的操纵下，#显示的是在管理员的操作下</p>
+<p>cd &#x2F; 去根目录     cd 切换路径      pwd 显示当前位置    ls 显示当前位置有哪些文件 </p>
+<p>cd .. 回到上一层    cd ~迅速回到家目录  ~显示为在家目录下   命令和参数之间用空格隔开</p>
+<p>touch 创建普通文件   mkdir 创建目录文件（文件夹）  </p>
+<p>ls -l 查看文件属性</p>
+<p>文件类型：-普通文件（归档） d目录（文件夹）设备 管道  链接 套接字 ，文件类型通过第一个符号区分，还有权限，如图所示</p>
+<p><img src="/./C:/Users/MECHREVO/AppData/Roaming/Typora/typora-user-images/image-20260207210551604.png" alt="null"><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773469181842-cd36f890-5386-4150-8c38-56a80213e683.png" alt="img"></p>
+<p>先是属主（u），再是同组（g），最后是其他人（o），权限的解读  r 读 ，w写 ，x执行  chmod命令可以改变文件权限  中间减号代表占位     权限有 读（r，4）、写（w，2）、执行（x，1）对应数字修改法，eg：chmod  762   main.c  的权限为 rwx rw- r–   7 &#x3D;4+2+1（rwx） 6&#x3D;4+2（rw-）  4（r–）</p>
+<p>文件权限的修改如下图所示</p>
+<p><img src="/./C:/Users/MECHREVO/AppData/Roaming/Typora/typora-user-images/image-20260207213044536.png" alt="null"><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773469206505-7795c722-2e01-401d-9444-ba9a0c9f8ae7.png" alt="img"></p>
+<p>绿色的文件，一般情况下为可执行的文件  </p>
+<p>cat 加文件名可以将文件内容打印到控制台  cp命令可以复制文件 eg：cp main.c   test.c,同时也可以将文件拷贝到其他文件夹中，eg cp main.c  tmp，即将mian.c文件复制到tmp文件夹中</p>
+<p>cp .. &#x2F;test.c（上一层文件）  .（当前文件） -&gt;拷到了test.c中有绝对路径    ..代表上一层  （一个点代表当前位置 两个点代表上一层位置）</p>
+<p>拷贝对象不是普通文件的时候 前面加-r   eg cp -r 文件夹 新文件夹</p>
+<p>rm 删除文件，可以删除当前路径下的文件，也可以删除绝对路径下的文件</p>
+<p> rm -rf删除文件夹（直接删）前提有权限 </p>
+<p>rm -f 删除普通文件（直接删）前提有权限</p>
+<p> rm -r 文件夹名称 删除文件夹</p>
+<p>ls -a显示隐藏文件</p>
+<p>mv 移动文件 同时也可以进行改名操作，在文件夹后斜杠加新名称，当前位置移动到当前位置，也是一种改名操作</p>
+<p>gcc  编译文件</p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>基本命令</p>
+<p>cd pwd  ls touch mkdir rm cp mv</p>
+<h5 id="vi-vim-文本编辑器"><a href="#vi-vim-文本编辑器" class="headerlink" title="vi&#x2F;vim 文本编辑器"></a>vi&#x2F;vim 文本编辑器</h5><p>：wq保存退出     ：w只保存   ：q退出（未改变文件） ：q！（不保存退出）</p>
+<p><img src="/./C:/Users/MECHREVO/AppData/Roaming/Typora/typora-user-images/image-20260208125757271.png" alt="null"><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773469243791-0f611e03-e44b-4cf4-8ff4-bec4e7a100d7.png" alt="img"></p>
+<p><img src="/./C:/Users/MECHREVO/AppData/Roaming/Typora/typora-user-images/image-20260208130013548.png" alt="null"><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773469252678-5bc6f65e-338b-450c-8564-306d2fc63a4d.png" alt="img"></p>
+<p>.&#x2F;后面只能跟绿色文件   .&#x2F;文件夹名即运行程序   绝对路径加文件名也可以运行文件   vi+新文件名可以直接创建 编译文件</p>
+<p>在vim下的快捷键命令，可以自己查（ai查）</p>
+<p>find命令可以查找文件夹</p>
+<p>grep命令 过滤作用，查找某个信息的时候可以使用</p>
+<p>字符串的搜索   &#x2F;string 向下搜索    ？string 向上搜索</p>
+<h5 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a>ps命令</h5><p>ps 查看终端中运行的进程 -&gt; ps -f 可以查看父进程-&gt;ps -ef 可以查看整个终端的进程</p>
+<p>PID  进程的ID号   PPID（父进程）</p>
+<p>jobs 查看后台运行的程序</p>
+<p>bg 后台</p>
+<p>fg 前台</p>
+<h5 id="是指运行后台程序"><a href="#是指运行后台程序" class="headerlink" title="&amp;-&gt;是指运行后台程序"></a>&amp;-&gt;是指运行后台程序</h5><p>操作系统：管理 进程，内存， 文件</p>
+<p>内核 是  tcsh、bash、sh</p>
+<p>ctrl +c结束（仅限于前台）</p>
+<p>kill -9+id号 直接将该进程杀死</p>
+<p>kill 杀死</p>
+<p>ctrl+z 停止</p>
+<p>进程可以前后台切换</p>
+<p>命令-&gt;插入 i光标前插入，a光标后插入，o光标的下一行开辟新行插入 I在行头 A在末尾 O在上一行</p>
+<p>插入到命令 ESC</p>
+<p>-bash 命令解释器-执行命令</p>
+<p>find 查找 -namc （按名称搜索）+文件名</p>
+<h5 id="查看文件的命令"><a href="#查看文件的命令" class="headerlink" title="查看文件的命令"></a>查看文件的命令</h5><p>cat more less head tail</p>
+<p>cat 可以连接两个文件，也可以打印内容</p>
+<p>采用cat命令进行内容写入时，结束时用 ctrl+d</p>
+<p>cat  aa  bb &gt;a.txt       &gt;让内容写到了a.txt文件中  —直接将打印的内容打印在文本上   可以将两个文件内容进行合并</p>
+<p>more 查看命令可以分屏显示    less 可以一直看   head 只显示文件开始的几行，tail可以看文件的后几行</p>
+<p>（| 管道  ） 可以在进程间通信，即在两个进程（命令）之间传递数据（输出的内容）</p>
+<p>可以把管道看成一个文件</p>
+<p>man 是一个帮助文档命令  man grep 就可以查帮助了，如果重命则需要加入序号，进行区分   1 命令  2 系统调用 3 库函数</p>
+<p>printf在linux下既是一个命令，也是一个函数</p>
+<p>系统调用都是在内核中实现</p>
+<p>wc命令 可以统计文件行数和字符数 之类的，具体可以查命令的作用</p>
+<p>runlevel 可以查看运行级别</p>
+<h5 id="文化压缩与解压命令"><a href="#文化压缩与解压命令" class="headerlink" title="文化压缩与解压命令"></a>文化压缩与解压命令</h5><p><img src="/./C:/Users/MECHREVO/AppData/Roaming/Typora/typora-user-images/image-20260305152652359.png" alt="null"><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773469272515-4e2773b3-487d-474a-9b9a-ab6a3eaa4487.png" alt="img"></p>
+<p>tar命令可以打和解包，gzip为压缩包的命令，打包后要进行压缩  </p>
+<p>top命令可以查看进程资源，类似于任务管理器</p>
+<p>在一个操作系统下可以添加多个用户，在&#x2F;etc&#x2F;passwd 文件夹下增添用户，新用户是在家目录下，userdel -r  用户名，可以删除用户</p>
+<p>passwd即是在家目录下的一个文件，也是一个可以修改密码的命令</p>
+<h5 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h5><p> 过滤   grep -i 忽略大小写  grep -c  查看行数 grep -v取反</p>
+<p>|管道 </p>
+<p>可以在两个进程（命令）之间传递数据（输出的内容）</p>
+<h5 id="man-帮助文档"><a href="#man-帮助文档" class="headerlink" title="man 帮助文档"></a>man 帮助文档</h5><p>1.命令   2.系统调用   3.库函数</p>
+<p>wc 统计个数 -c按照字符 -w按单词</p>
+<p>shutdown关机需要管理员权限 -h now立刻关机  -r now 立刻重启</p>
+<h6 id="runlevel-查看运行级别"><a href="#runlevel-查看运行级别" class="headerlink" title="runlevel 查看运行级别"></a>runlevel 查看运行级别</h6><p>0 关机 1 单用户模式  2 多用户无网络模式 </p>
+<p>3 完全的多用户文本界面  4 未定义或自定义  5 图形化界面  6 重启</p>
+<h5 id="文件的压缩和解压"><a href="#文件的压缩和解压" class="headerlink" title="文件的压缩和解压"></a>文件的压缩和解压</h5><p>tar</p>
+<p>c创建包文件</p>
+<p>f指定目标为文件而不是设备</p>
+<p>v显示过程</p>
+<p>t显示包中的内容而不释放</p>
+<p>x释放包中的内容</p>
+<p>zGNU版本新加的，使得tar有压缩和解压的功能</p>
+<p> tar zxf+文件名 解包（一步到位）</p>
+<p>gzip -d+问价名 解压缩</p>
+<p>tar xf+文件名 解包</p>
+<p>top 查看资源管理 </p>
+<h5 id="用户管理命令"><a href="#用户管理命令" class="headerlink" title="用户管理命令"></a>用户管理命令</h5><p>useradd&#x2F;adduser  创建新用户</p>
+<p>userdel 删除用户</p>
+<p>passwd+用户名	也可以修改密码</p>
+<h5 id="ELF-二进制运行程序的标志（代码编译链接的过程）"><a href="#ELF-二进制运行程序的标志（代码编译链接的过程）" class="headerlink" title="ELF 二进制运行程序的标志（代码编译链接的过程）"></a>ELF 二进制运行程序的标志（代码编译链接的过程）</h5><p>main.c-&gt;main.exe &#x2F;main  （Linux直接不跟后缀名）</p>
+<p>预编译  gcc -E main.c -o main.i </p>
+<p>编译 gcc -S main.i -o main.s</p>
+<p>汇编 gcc -c main.s -o main.o</p>
+<p> 链接 gcc main.o -o main&#x2F;gcc -o main main.c</p>
+<p>什么是预编译</p>
+<h2 id="makefile-gdb"><a href="#makefile-gdb" class="headerlink" title="makefile-gdb"></a>makefile-gdb</h2><p>which 查看命令在哪里</p>
+<p>Linux 可执行 格式 ELF 目标文件</p>
+<p>Windows 可执行 PE </p>
+<p>在linux下的基本命令都在&#x2F;usr&#x2F;bin目录下</p>
+<p><img src="/./C:/Users/MECHREVO/AppData/Roaming/Typora/typora-user-images/image-20260313200613406.png" alt="null"><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773469308603-e87faa4f-3c8e-4e01-b600-d5bd5d7b7d21.png" alt="img"></p>
+<p>代码编译分为四步，这个错误是因为函数都在不同的.c文件中，因此需要我们将不同的.c文件，预编译、编译、汇编后，最后链接在一起</p>
+<h6 id="多个文件如何编译"><a href="#多个文件如何编译" class="headerlink" title="多个文件如何编译"></a>多个文件如何编译</h6><p>makefile 管理工程 自动化工程  make</p>
+<p>makefile文件有两种命名形式 Makefile makefile</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773470630589-3390e9da-5292-4226-85a9-1cc2c93e112b.png" alt="img"></p>
+<p>在makefile文件中建立文件的依赖，从而实现多个文件编译  ，输入make命令直接运行</p>
+<p>makefile文件一般是采用工具来实现的，不用手动编辑</p>
+<p>在C++下会使用Cmake工具去整理makefile文件去管理工程</p>
+<p>运行时错误 1.语法错误 2.运行时错误 （调试代码）</p>
+<h6 id="调试的对象是：运行着的对象（进程）"><a href="#调试的对象是：运行着的对象（进程）" class="headerlink" title="调试的对象是：运行着的对象（进程）"></a>调试的对象是：运行着的对象（进程）</h6><p>gcc -o main main.c -g &#x2F;gcc -g -o main main.c（调试版本）</p>
+<p>gdb main</p>
+<p>l 显示代码</p>
+<p>b+行号 加断点</p>
+<p>r 运行程序</p>
+<p>n 单步执行</p>
+<p>p打印</p>
+<p>q退出</p>
+<p>l+n 跳到n行</p>
+<p>info  break 查看断点信息</p>
+<p>delete +断点编号 删除断点</p>
+<p>c 直接执行到下一个断点处</p>
+<p>s 进入函数</p>
+<p>finish 跳出这个函数</p>
+<p>b +函数名 直接在函数名处加断点</p>
+<p>bt 查看函数调用的栈关系</p>
+<p>display  一直显示</p>
+<h2 id="静态库共享库"><a href="#静态库共享库" class="headerlink" title="静态库共享库"></a>静态库共享库</h2><h5 id="库文件"><a href="#库文件" class="headerlink" title="库文件"></a>库文件</h5><p>库：预先编译好的方法的集合</p>
+<h6 id="静态库和共享库"><a href="#静态库和共享库" class="headerlink" title="静态库和共享库"></a>静态库和共享库</h6><p>静态库特点</p>
+<p>共享库特点</p>
+<p>静态库 libxx.a</p>
+<p>共享库 libxx.so</p>
+<p>lib是前缀 ，.a  .so是后缀</p>
+<p>编译链接c库是默认的，其他的库不知道链接，因此要告诉库链接 main.c-&gt;main.o链接1</p>
+<p>eg：gcc -o main main.c  -L.(路径)  -lfoo(库名)</p>
+<p>一般写的是 gcc -o main main.c -lfoo</p>
+<p>静态库和共享库系统默认会先试用静态库</p>
+<p>环境变量 LD_LIBRARY_PATH</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773663852219-f975e474-2e42-438a-9f6e-c077b33c21b4.png" alt="img"></p>
+<p>如图，此时的main程序就链接这libc.so.6共享库，头文件只是声明，函数会打包实现在库函数当中</p>
+<p>库的 作用是通过将汇编的文件整体打包，可以更好的调用</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773802852215-61760ca9-9e72-442f-9e5b-a8e411188624.png" alt="img"></p>
+<p>使用库的命令，其中-L写库的位置路径 ，-l后跟的是库名</p>
+<p>库函数需要你先将函数实现在.c文件中，然后在进行汇编，最后都打包在静态库或者共享库中，打包的都是汇编后的.o文件</p>
+<p>当系统中同时存有静态库和共享库的时候，系统会默认先试用共享库</p>
+<p>共享库移动到include头文件下，也是可以找到链接库的</p>
+<p>LD_LIBRART_PATH&#x3D;这个命令可以指定当前位置下的共享库进行链接  </p>
+<h6 id="静态库和共享库的区别"><a href="#静态库和共享库的区别" class="headerlink" title="静态库和共享库的区别"></a>静态库和共享库的区别</h6><p>静态库，用到的方法会包含到可执行程序中</p>
+<p>共享库，用到的方法只做标记，并不包含到可执行程序中，在运行程序时才动态链接</p>
+<p>静态库&#x3D;&#x3D;动态链接库</p>
+<h2 id="fork进程"><a href="#fork进程" class="headerlink" title="fork进程"></a>fork进程</h2><p>计算机可以抽象为下面这幅图来理解</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1773824737869-d54851f6-62f3-424f-beda-e552bf8824a0.png" alt="img"></p>
+<p>操作系统就是：管理计算机上的软硬件资源，为用户提供一个交互的接口</p>
+<p>进程：是指一个正在运行的程序</p>
+<p>struct task_struct </p>
+<p>PCB进程控制块（进程描述符），进程存在的唯一标志</p>
+<p>当进程结束的时候，内存会被回收，PCB也会被释放</p>
+<p>进程状态： 就绪、运行、阻塞，三个非常基础的状态</p>
+<h6 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h6><p>简单分页：逻辑页 物理页  页表</p>
+<p>磁盘-》内存-》缓存-》寄存（内存越来越小，速度越来越快0）</p>
+<p>缓冲区-&gt;屏幕（硬件设备）</p>
+<p>刷新缓冲区的三种方式1 缓冲区满  2 刷新缓冲区  3 程序结束（刷新缓冲区）</p>
+<p>\n对于屏幕来说强制刷新缓冲区</p>
+<p>exit()-&gt;刷缓冲区-&gt;_exit() ——》 (真正退出进程)</p>
+<p>内存管理的相关概念</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1776672540107-71ca9656-95b4-4d6d-9148-31077f3932c1.png" alt="img"></p>
+<p>主函数的三个参数</p>
+<p>int main（int argc，char* argv[]，char*envp[]）</p>
+<h6 id="主函数-fork复制进程"><a href="#主函数-fork复制进程" class="headerlink" title="主函数 fork复制进程"></a>主函数 fork复制进程</h6><p>进程的复制是有内存空间的，父子进程是相对而言的 </p>
+<p>fork执行完之后，子进程才会出来，因此fork只复制一次（进行完成父子分开（独立））  在复制时在调用</p>
+<p>fork不会重复</p>
+<p>fork()的复制过程，先产生一个ID号，把父进程的程序给子进程复制一份，然后ID号替换过来</p>
+<p>fork()||fork()</p>
+<p>fork()&amp;&amp;fork()</p>
+<p>printf(“A\n”);打印三个A</p>
+<p>for(int i&#x3D;0;&lt;2;i++)</p>
+<p>{</p>
+<p>   fork();</p>
+<p>  printf(“A\n”);</p>
+<p>}&#x2F;&#x2F;打印出6个A</p>
+<p>for(int i&#x3D;0;&lt;2;i++)</p>
+<p>{</p>
+<p>   fork();6</p>
+<p>  printf(“A”);</p>
+<p>}&#x2F;&#x2F;打印出8个A</p>
+<p>目前看到的地址都是逻辑地址</p>
+<p>PCB进程控制符</p>
+<h2 id="地址空间-僵死进程"><a href="#地址空间-僵死进程" class="headerlink" title="地址空间-僵死进程"></a>地址空间-僵死进程</h2><p>（补充知识）每个进程都有虚拟地址空间：</p>
+<p>虚拟空间大小为32位 2的32次方是4G</p>
+<p>内核分区为代码段 数据段 堆 栈</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1774494684765-7abdb92d-da4a-4e94-b0c5-7fb84e5d15d5.png" alt="img"></p>
+<p>虚拟空间中 用户使用的空间小于等于3G 内核还有1G</p>
+<p>变量地址（逻辑地址）相对于全零地址的偏移量</p>
+<p>num main 可以列出main的地址</p>
+<p>逻辑地址是固定的</p>
+<p>操作系统能使用的物理内存上线</p>
+<p>32-&gt;4G </p>
+<p>当物理内存为2G时的话最大分配是2G</p>
+<p>虚拟内存 磁盘上划分一块空间然后当做内存来用，可以运行比物理空间更大内存空间的程序</p>
+<h6 id="僵死进程"><a href="#僵死进程" class="headerlink" title="僵死进程"></a>僵死进程</h6><p>子进程先结束，父进程没有wait获取退出码，子进程编程僵死进程</p>
+<p><strong>孤儿进程（父进程先结束 ）</strong>-&gt;重新分配父进程   一定会wait获取退出码</p>
+<p>使用wait要加头文件#include&lt;sys&#x2F;wait.h&gt;</p>
+<p>getpid()获取子进程的id号   getppid()获取父进程的id号</p>
+<p>写时拷贝，以页为单位，通过共享来提高效率</p>
+<p>open&#x2F;road&#x2F;write&#x2F;close</p>
+<p>fopen这是个库函数-&gt;open系统调用</p>
+<p>printf()-writc()</p>
+<p>fork()</p>
+<h6 id="打开文件的操作"><a href="#打开文件的操作" class="headerlink" title="打开文件的操作"></a>打开文件的操作</h6><p>文件描述符 int fd;文件的操作是通过文件描述符实现的</p>
+<p>文件描述符一般都是整型</p>
+<p>在linux下，一切皆文件</p>
+<p>父进程打开的文件，fork后，子进程也可以访问，并且共享文件偏移量</p>
+<p>（先open后fork和先fork后open的两个结果是完全不一样的）</p>
+<p>int open（第三个参数是权限） </p>
+<p>文件操作，要引入头文件#include&lt;fcntl.h&gt;</p>
+<p>文件存在忽略0_CREAT</p>
+<p>文件操作，一般流程是进行 ，先打开，后写入，最后在进行关闭操作</p>
+<p>文件的创建的判断：失败用用-1来判断，成功会返回有效值</p>
+<p>文件表</p>
+<p>0 stdin（键盘）  1 stdout（屏幕）  2 stderr（） 3…等</p>
+<p>任何文件启动后这前三个数据就会被启动</p>
+<h2 id="exec替换"><a href="#exec替换" class="headerlink" title="exec替换"></a>exec替换</h2><p>进程替换 exec系列</p>
+<p>execl 替换 execlp  execle</p>
+<p>execv  execvp</p>
+<p>execve系统调用</p>
+<p>fork+exec一般一块使用，复制进程后，替换成可执行的程序</p>
+<h1 id="Mybash的实现"><a href="#Mybash的实现" class="headerlink" title="Mybash的实现"></a>Mybash的实现</h1><p>strtok可以分隔字符串</p>
+<p>fflush命令将缓冲区的数据强制刷新出来</p>
+<p>strcmp函数比较，如果相等返回值是0，不相等会返回正负数</p>
+<p>复杂的linux命令有的是调用的接口</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>玩进程间通信（IPC）：管道 信号量 共享内存 消息队列 套接字</p>
+<p>管道分：有名管道  无名管道  ——管道相当于一个内存缓冲区</p>
+<p>mkfifo命令可以创建有名管道，</p>
+<p>通信方式有半双工和全双攻两种，半双工是单向，全双工是双向</p>
+<p>打开管道的条件：一个读打开，一个写打开，对于管道来说，要么只读要么只写</p>
+<p>当管道的写端，关闭后，该端，read（）会返回0</p>
+<p>管道也是存在内存大小</p>
+<p>open（）阻塞 必须是两个进程一起打开，并且是一读，一个写，因此打开一个进程的时候会阻塞。</p>
+<p>创建管道 mkfifo fifo</p>
+<p>写关闭，读返回0    读关闭，写异常，终止？</p>
+<p>1.有名和无名的区别：有名可以在任意两个进程间通信，无名只能在父子进程间通信</p>
+<p>2.管道通信方式：半双工</p>
+<p>3.写入管道的数据在哪里：在内存</p>
+<p>pipe 创建无名管道</p>
+<p>pipe（int fd[]）</p>
+<p>fd[0]读端</p>
+<p>fd[1]写端</p>
+<h2 id="复习"><a href="#复习" class="headerlink" title="复习"></a>复习</h2><p>目录结构：bin lib home（了解家目录） etc root proc  usr … 离开家目录没有权限</p>
+<p>命令：对文件操作：cp，rm，mv， vim&#x2F;vi，cat，more，head，tail，find，grep（先打开个文件，在这个文件中找需要的内容）</p>
+<p>进程；ps ，kill（结束进程），&amp;后台运行fg，bg，top（系统检测） </p>
+<p>用户管理 （了解）| tar包 压缩，解压(会解压xx.tar.gz)</p>
+<p>文件权限 chmod 会改权限r，w，x</p>
+<p>程序的编译</p>
+<p>gcc编译程序  预编译，编译，汇编，链接（程序员的自我修养2.1）</p>
+<p>单个文件 gcc -o main main.c</p>
+<p>多个文件 gcc -o main main.c add.c max.c</p>
+<p>makefile&#x2F;make   –cmake</p>
+<p>调试：GDB，-g调试信息   常见命令l，b，r，n，p，c，s，q</p>
+<p>库文件：静态库&#x2F;共享库  区别？</p>
+<p>libxx.a&#x2F;libxx.so</p>
+<p>进程：1.主函数参数，2.printf缓冲区 fork 复制进程，写时拷贝，并发运行|并行 僵死进程，产生原因，</p>
+<p>exec替换 ，信号，SIGINT，SIGCHLD…kill()发送信号，signal改变信号响应方式</p>
+<p>进程间通信（IPC）：管道，信号量，共享内存，消息队列，套接字</p>
+<h2 id="信号量-可以处理多线程和多进程"><a href="#信号量-可以处理多线程和多进程" class="headerlink" title="信号量(可以处理多线程和多进程)"></a>信号量(可以处理多线程和多进程)</h2><p>进程间通信</p>
+<p>管道 信号量（可以同步进程） 共享内存 消息队列 套接字</p>
+<p>临界资源和临界区  临界资源：同一时刻只允许一个进程访问的资源   临界区：访问临界资源的代码段</p>
+<p>如果两个进程要同时访问同于一个信号量的话，就得需要相同的key值</p>
+<p>共享内存消息队列</p>
+<p>ipcs 查看共享消息队列</p>
+<p>shmget 获取  shmat 指定信号量id （映射空间）  shmdt（断开映射） shmctl（初始化 移除功能）</p>
+<p>main 写入数据 test读取数据 不写入就不读取</p>
+<p>共享内存可以让两个进程同时使用</p>
+<p>p（对信号量减一） v（对信号量加一） 操作</p>
+<p>用两个信号量 一个控制main写入  一个控制test输出</p>
+<p>！！！共享内存用信号量控制用好</p>
+<p>共享消息队列。可以通过定义结构体来存放不同的数据结构  struct mess 定义对象</p>
+<p>IPC_CREAT|IPC_EXCL——&gt;全新创建信号量 </p>
+<p>信号量初始值是操作数目有0 1 2</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>线程：进程内部的一条执行路径</p>
+<p>进程：一个正在运行的程序</p>
+<p>同步：控制多个进程的先后顺序</p>
+<p>线程安全：多线程程序的无论调度顺序如何，都可以得到正确的结果</p>
+<p>strtok_r 可重入函数，也叫线程安全函数</p>
+<p>thread_xx(名字)（）线程函数–通过主函数调用</p>
+<p>为什么要用多线程？</p>
+<p>创建线程</p>
+<p>pthread.h &#x2F;&#x2F;头文件</p>
+<p>pthread_create()</p>
+<p>pthread_join() &#x2F;&#x2F;等待某个线程结束</p>
+<p>pthread_exit() &#x2F;&#x2F;退出线程</p>
+<p>gcc -o main main.c -lpthread（加库）</p>
+<p>一般都是主线程活到最后</p>
+<p>pthread_create(id，属性一般为空，线程函数名，返回值（可以为空）)</p>
+<p>线程函数可以返回全局变量给主函数</p>
+<p>多线程进程中 fork后只有一个路径</p>
+<p>父-》锁</p>
+<p>fork（）</p>
+<p>锁 父进程中用的是不是同一个</p>
+<p>1 父子进程用的不是同一个锁，fork时，锁被复制</p>
+<p>2子进程中锁的状态取决于复制时，父进程中锁的状态</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2026/png/66487668/1792746764217-2b40477c-92d5-4923-871e-9e14211d79bc.png" alt="img"></p>
+<p>读写锁的初始化，加锁，解锁和销毁</p>
+<h2 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h2><p>tcp服务器   </p>
+<p>网络</p>
+<p>互联网</p>
+<p>ip地址：ipv4 4个字节</p>
+<p>端口号：short</p>
+<p>ip+port 地址–协议</p>
+<p>套接字 sockct（）数据的收发 相当于（手机）–》进程之间可以通信了</p>
+<p>socket套接字地址结构</p>
+<p>分层：osi 模型七层     应用层 表示层 会话层 传输层 网络层 数据链路层 物理层 （从上到下）</p>
+<p>​                         四层  应用层 传输层 网络层 数据链路层（从上到下）</p>
+<p><img src="/./C:/Users/dawn/AppData/Roaming/Typora/typora-user-images/1691202067448.png" alt="null"></p>
+<p>sockfd监听套接字</p>
+<p>先运行服务器 在运行客户端</p>
+<p>&#x2F;&#x2F;ser<br>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;string.h&gt;<br>#include &lt;unistd.h&gt;<br>#include &lt;sys&#x2F;socket.h&gt;<br>#include &lt;netinet&#x2F;in.h&gt;<br>#include &lt;arpa&#x2F;inet.h&gt;</p>
+<p>int main()<br>{<br>    int sockfd &#x3D; socket(AF_INET,SOCK_STREAM,0);&#x2F;&#x2F;创建套接字  (买了手机)<br>    if ( sockfd &#x3D;&#x3D; -1 )<br>    {<br>        exit(1);<br>    }</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">struct sockaddr_in saddr,caddr;</span><br><span class="line">memset(&amp;saddr,0,sizeof(saddr));</span><br><span class="line">saddr.sin_family = AF_INET;//ipv4地址族</span><br><span class="line">saddr.sin_port = htons(6000);//网络字节序列(大端)</span><br><span class="line">saddr.sin_addr.s_addr = inet_addr(&quot;127.0.0.1&quot;);</span><br><span class="line"></span><br><span class="line">int res = bind(sockfd,(struct sockaddr*)&amp;saddr,sizeof(saddr));//绑定ip,port</span><br><span class="line">if ( res == -1 )</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;bind err\n&quot;);</span><br><span class="line">    exit(1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">res = listen(sockfd, 5);//5监听队列的大小</span><br><span class="line">if ( res == -1 )</span><br><span class="line">&#123;</span><br><span class="line">    exit(1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">while( 1 )</span><br><span class="line">&#123;</span><br><span class="line">    int len = sizeof(caddr);</span><br><span class="line">    int c = accept(sockfd,(struct sockaddr*)&amp;caddr,&amp;len);//接收链接，有人发起连接。可能阻塞</span><br><span class="line">    if ( c &lt; 0 )</span><br><span class="line">    &#123;</span><br><span class="line">        continue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    printf(&quot;accept c=%d\n&quot;,c);</span><br><span class="line">    char buff[128] = &#123;0&#125;;</span><br><span class="line">    int n = recv(c,buff,127,0);//接收数据，可能阻塞</span><br><span class="line">    printf(&quot;recv (%d):%s\n&quot;,n,buff);</span><br><span class="line">    send(c,&quot;ok&quot;,2,0);</span><br><span class="line"></span><br><span class="line">    close(c);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>}</p>
+<p>&#x2F;&#x2F;cli<br>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;string.h&gt;<br>#include &lt;unistd.h&gt;<br>#include &lt;sys&#x2F;socket.h&gt;<br>#include &lt;netinet&#x2F;in.h&gt;<br>#include &lt;arpa&#x2F;inet.h&gt;</p>
+<p>int main()<br>{<br>    int sockfd &#x3D; socket(AF_INET,SOCK_STREAM,0);&#x2F;&#x2F;创建套接字   tcp协议， 面向连接的 可靠的 流式服务<br>    if ( sockfd &#x3D;&#x3D; -1 )<br>    {<br>        exit(1);<br>    }</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">struct sockaddr_in saddr;//服务器的地址,注意不是客户端自己的</span><br><span class="line">memset(&amp;saddr,0,sizeof(saddr));</span><br><span class="line">saddr.sin_family = AF_INET;</span><br><span class="line">saddr.sin_port = htons(6000);//要连接的服务器的端口</span><br><span class="line">saddr.sin_addr.s_addr = inet_addr(&quot;127.0.0.1&quot;);//制定要连接的服务器的ip地址</span><br><span class="line"></span><br><span class="line">int res = connect(sockfd,(struct sockaddr*)&amp;saddr,sizeof(saddr));</span><br><span class="line">if ( res == -1)</span><br><span class="line">&#123;</span><br><span class="line">    printf(&quot;connect err\n&quot;);</span><br><span class="line">    exit(1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">char buff[128] = &#123;0&#125;;</span><br><span class="line">printf(&quot;input:\n&quot;);</span><br><span class="line">fgets(buff,128,stdin);</span><br><span class="line"></span><br><span class="line">send(sockfd,buff,strlen(buff),0);</span><br><span class="line">memset(buff,0,128);</span><br><span class="line">recv(sockfd,buff,127,0);</span><br><span class="line">printf(&quot;buff=%s\n&quot;,buff);</span><br><span class="line">close(sockfd);</span><br><span class="line">exit(0);</span><br></pre></td></tr></table></figure>
+
+<p>}</p>
+<p><img src="/./C:/Users/dawn/AppData/Roaming/Typora/typora-user-images/1691550843430.png" alt="null"></p>
+<p>I&#x2F;O复用</p>
+<p>可以同时监听多个文件描述符，但它本身是阻塞的 ，对提高程序性能有至关重要</p>
+<p>select&#x2F;poll&#x2F;epoll（linux）</p>
+<p>poll select 轮询方式检测  epoll 回调方式检测</p>
+<p>select系统调用</p>
+<p>在一段时间内，监听用户感兴趣的文件描述符的可读，可写和异常文件</p>
+<p>1.epoll_create 创建内核事件表  红黑树</p>
+<p>2.epoll_ctl 注册事件 添加 移除</p>
+<p>3.epoll_wait  获取就绪描述符 （就绪队列）</p>
+<p>内核事件表-&gt;就绪队列-&gt;返回给用户</p>
+<p>LT 描述符事件就绪后，如果没有处理或者没处理完，那么io函数会继续提醒用户，直到用户将事件处理完（可以不断提醒，直到事件处理完）</p>
+<p>ET 描述符事件就绪后，如果没有处理或者没处理完，那么io函数也不在提醒用户，</p>
+<p>LT（水平触发）和ET（边缘触发）的区别？</p>
+<p>LT 模式不容易丢数据  编程简单 系统开销大  </p>
+<p>ET 可能数据会被丢到缓冲区 只提醒一次  高效模式（提醒一次要把数据处理完）&#x2F;&#x2F;”循环“ 处理 &#x2F;&#x2F;描述符要设置为非阻塞</p>
+<p>select poll epoll 都具有 LT模式 epoll 具有ET模式 </p>
+<p>netstat -natp 查看缓冲区</p>
+<p>1.在调用io方法时，select，poll需要传入所有描述符 epoll每个描述符只需要穿一次</p>
+<p>2.内核实现： select&#x2F;poll轮训，O(n), epoll 注册回调函数方式</p>
+<p>3.io方法返回后，select&#x2F;poll需要遍历所有描述符，找就绪的O(n) epoll 直接得到就绪描述符O(1)</p>
+<p>epoll LT和ET两种模式</p>
+<p>select epoll （只有LT模式）区别</p>
+<p>看Linux高性能服务器编程 表格</p>
+<p>libevent网络库</p>
+<p>命令</p>
+<p>下载，编译-》库文件</p>
+<p>事件：fd，READ，fun（）</p>
+<p>注册、注销-&gt;libevent框架  就绪-&gt;调用回调函数 fun（）</p>
+<p>​                                                       -&gt;epoll事件循环</p>
+<p>1.定义libevent实例</p>
+<ol>
+<li>定义事件 添加事件</li>
+<li>启动事件循环</li>
+</ol>
+<h2 id="Mysql"><a href="#Mysql" class="headerlink" title="Mysql"></a>Mysql</h2><p>1.数据库mysql   数据文件 数据库管理系统</p>
+<p>2.c&#x2F;s结构   mysql服务器（mysqld）与客户端（mysql客户端）连接</p>
+<p>mysql -uroot（mysql管理员用户）  -p； root 没有密码</p>
+<p>3.创建数据库</p>
+<p>mysql端口号是3306</p>
+<h1 id="视图-事务-索引"><a href="#视图-事务-索引" class="headerlink" title="视图 事务 索引"></a>视图 事务 索引</h1><h5 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h5><p>视图（View）是一种虚拟存在的表，对于使用视图的用户来说基本上是透明的。视图并不在数据库<br>中实际存放数据，它的数据来自定义视图时使用的基本表，并且是在使用视图时动态生成的。</p>
+<h5 id="为什么要使用视图"><a href="#为什么要使用视图" class="headerlink" title="为什么要使用视图"></a>为什么要使用视图</h5><p>简化复杂的sql操作，在编写查询后，可以方便的重用它而不必知道它的查询细节。<br>重复使用该sql语句。<br>使用表的组成部分而不是整个表。<br>保护数据，可以给用户授予表的特定部分的访问权限而不是整个表。<br>更改数据格式和表示。</p>
+<h5 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h5><p>因为视图不包含数据，所以每次使用视图时，都必须处理查询执行时所需的任一个检索。如果是多<br>个联结和过滤创建了复杂的视图或者嵌套了视图，可能会出现性能下降。</p>
+<p>show full tables; 会显示表和视图的类型</p>
+<p>drop view viewname;删除视图</p>
+<h5 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h5><p>索引是一种特殊的文件，它包含着对数据表里所有记录的引用指针。简单讲，就像一本书前面的目录，<br>能加快查询速度。</p>
+<p>b+树 分层固定，层数不多，结点多</p>
+<h5 id="每个列加索引好不好："><a href="#每个列加索引好不好：" class="headerlink" title="每个列加索引好不好："></a>每个列加索引好不好：</h5><p>每个列都加，要插入好多棵b+树，修改数据b+树都要发生改变，太麻烦所以每个列加索引不好。</p>
+<p>可以考虑作为索引的数据结构有如下几种，下面介绍下不同数据结构的特点：<br>hash表<br>二叉树<br>b树<br>b+树</p>
+<h5 id="为什么使⽤索引？"><a href="#为什么使⽤索引？" class="headerlink" title="为什么使⽤索引？"></a>为什么使⽤索引？</h5><p>通过创建唯⼀性索引，可以保证数据库表中每⼀⾏数据的唯⼀性。<br>可以⼤⼤加快数据的检索速度，这也是创建索引的最主要的原因。<br>帮助服务器避免排序和临时表<br>将随机IO变为顺序IO。<br>可以加速表和表之间的连接，特别是在实现数据的参考完整性⽅⾯特别有意义</p>
+<p>幻读：两个事务对一个表中数据进行查询，第一个事务对表中数据进行插入、删除、修改等操作，第二个事务没看到。</p>
+<p>一条sql语句自成事务</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://dawnd-crypto.github.io">不爱学习的小党</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://dawnd-crypto.github.io/2026/11/06/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">https://dawnd-crypto.github.io/2026/11/06/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://dawnd-crypto.github.io" target="_blank">不爱学习的小党</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related  no-desc" href="/2026/11/06/agent%E5%AD%A6%E4%B9%A0/" title="agent学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">agent学习</div></div></div></a><a class="pagination-related  no-desc" href="/2026/11/06/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">计算机网络</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">不爱学习的小党</div><div class="author-info-description">保持热爱，安静写字</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">目录结构及基本命令</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#linux%E5%BA%94%E7%94%A8%EF%BC%9A"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">linux应用：</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">目录结构</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#vi-vim-%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">vi&#x2F;vim 文本编辑器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ps%E5%91%BD%E4%BB%A4"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">ps命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%98%AF%E6%8C%87%E8%BF%90%E8%A1%8C%E5%90%8E%E5%8F%B0%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.0.0.3.</span> <span class="toc-text">&amp;-&gt;是指运行后台程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-number">2.0.0.4.</span> <span class="toc-text">查看文件的命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E5%8C%96%E5%8E%8B%E7%BC%A9%E4%B8%8E%E8%A7%A3%E5%8E%8B%E5%91%BD%E4%BB%A4"><span class="toc-number">2.0.0.5.</span> <span class="toc-text">文化压缩与解压命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#grep"><span class="toc-number">2.0.0.6.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#man-%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3"><span class="toc-number">2.0.0.7.</span> <span class="toc-text">man 帮助文档</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#runlevel-%E6%9F%A5%E7%9C%8B%E8%BF%90%E8%A1%8C%E7%BA%A7%E5%88%AB"><span class="toc-number">2.0.0.7.1.</span> <span class="toc-text">runlevel 查看运行级别</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B"><span class="toc-number">2.0.0.8.</span> <span class="toc-text">文件的压缩和解压</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">2.0.0.9.</span> <span class="toc-text">用户管理命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ELF-%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%A0%87%E5%BF%97%EF%BC%88%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%89"><span class="toc-number">2.0.0.10.</span> <span class="toc-text">ELF 二进制运行程序的标志（代码编译链接的过程）</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#makefile-gdb"><span class="toc-number">3.</span> <span class="toc-text">makefile-gdb</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E7%BC%96%E8%AF%91"><span class="toc-number">3.0.0.0.1.</span> <span class="toc-text">多个文件如何编译</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%98%AF%EF%BC%9A%E8%BF%90%E8%A1%8C%E7%9D%80%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%88%E8%BF%9B%E7%A8%8B%EF%BC%89"><span class="toc-number">3.0.0.0.2.</span> <span class="toc-text">调试的对象是：运行着的对象（进程）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-number">4.</span> <span class="toc-text">静态库共享库</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BA%93%E6%96%87%E4%BB%B6"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">库文件</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="toc-number">4.0.0.1.1.</span> <span class="toc-text">静态库和共享库</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E5%92%8C%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.0.0.1.2.</span> <span class="toc-text">静态库和共享库的区别</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fork%E8%BF%9B%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">fork进程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">5.0.0.0.1.</span> <span class="toc-text">内存管理</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0-fork%E5%A4%8D%E5%88%B6%E8%BF%9B%E7%A8%8B"><span class="toc-number">5.0.0.0.2.</span> <span class="toc-text">主函数 fork复制进程</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4-%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">地址空间-僵死进程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%83%B5%E6%AD%BB%E8%BF%9B%E7%A8%8B"><span class="toc-number">6.0.0.0.1.</span> <span class="toc-text">僵死进程</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">6.0.0.0.2.</span> <span class="toc-text">打开文件的操作</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exec%E6%9B%BF%E6%8D%A2"><span class="toc-number">7.</span> <span class="toc-text">exec替换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Mybash%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number"></span> <span class="toc-text">Mybash的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E9%81%93"><span class="toc-number">1.</span> <span class="toc-text">管道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E4%B9%A0"><span class="toc-number">2.</span> <span class="toc-text">复习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F-%E5%8F%AF%E4%BB%A5%E5%A4%84%E7%90%86%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%A4%9A%E8%BF%9B%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">信号量(可以处理多线程和多进程)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">网络编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql"><span class="toc-number">6.</span> <span class="toc-text">Mysql</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE-%E4%BA%8B%E5%8A%A1-%E7%B4%A2%E5%BC%95"><span class="toc-number"></span> <span class="toc-text">视图 事务 索引</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE"><span class="toc-number">0.0.0.1.</span> <span class="toc-text">视图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE"><span class="toc-number">0.0.0.2.</span> <span class="toc-text">为什么要使用视图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-number">0.0.0.3.</span> <span class="toc-text">性能问题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95"><span class="toc-number">0.0.0.4.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E5%88%97%E5%8A%A0%E7%B4%A2%E5%BC%95%E5%A5%BD%E4%B8%8D%E5%A5%BD%EF%BC%9A"><span class="toc-number">0.0.0.5.</span> <span class="toc-text">每个列加索引好不好：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E2%BD%A4%E7%B4%A2%E5%BC%95%EF%BC%9F"><span class="toc-number">0.0.0.6.</span> <span class="toc-text">为什么使⽤索引？</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/agent%E5%AD%A6%E4%B9%A0/" title="agent学习">agent学习</a><time datetime="2026-11-06T10:13:48.000Z" title="发表于 2026-11-06 18:13:48">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="Linux操作系统">Linux操作系统</a><time datetime="2026-11-06T10:13:33.000Z" title="发表于 2026-11-06 18:13:33">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">计算机网络</a><time datetime="2026-11-06T10:13:20.000Z" title="发表于 2026-11-06 18:13:20">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a><time datetime="2026-11-06T10:13:04.000Z" title="发表于 2026-11-06 18:13:04">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/C-%E5%AD%A6%E4%B9%A0/" title="C++学习">C++学习</a><time datetime="2026-11-06T10:12:47.000Z" title="发表于 2026-11-06 18:12:47">2026-11-06</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.1.260810</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.1.260810"></script><script src="/js/main.js?v=5.7.1.260810"></script><div class="js-pjax"></div><script src="/js/cover-widgets.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
